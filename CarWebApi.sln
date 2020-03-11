@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWebApi", "CarWebApi\CarWebApi.csproj", "{BF264544-91AA-4BD0-84FE-C2158DCD58DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarWebApiTests", "CarWebApiTests\CarWebApiTests.csproj", "{03963A67-CE0F-485C-80DC-AD2190DE7C0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF264544-91AA-4BD0-84FE-C2158DCD58DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF264544-91AA-4BD0-84FE-C2158DCD58DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF264544-91AA-4BD0-84FE-C2158DCD58DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF264544-91AA-4BD0-84FE-C2158DCD58DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03963A67-CE0F-485C-80DC-AD2190DE7C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03963A67-CE0F-485C-80DC-AD2190DE7C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03963A67-CE0F-485C-80DC-AD2190DE7C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03963A67-CE0F-485C-80DC-AD2190DE7C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B5CE459-1CF9-4578-AF95-6A8D6149E4CC}
+	EndGlobalSection
+EndGlobal
