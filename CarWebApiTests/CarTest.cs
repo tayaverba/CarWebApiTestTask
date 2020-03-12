@@ -16,6 +16,7 @@ namespace CarWebApiTests
             Service = new CarRepositoryMock();
             Controller = new CarController(Service);
         }
+        #region GetAll tests
         [Fact]
         public void GetAll_WhenCalled_ReturnsOkResult()
         {
@@ -30,7 +31,8 @@ namespace CarWebApiTests
             var items = Assert.IsType<List<Car>>(result.Value);
             Assert.Equal(3, items.Count);
         }
-
+        #endregion
+        #region Get tests
         [Fact]
         public void Get_UnknownIdPassed_ReturnsNotFoundResult()
         {
@@ -54,7 +56,39 @@ namespace CarWebApiTests
             Assert.IsType<Car>(result.Value);
             Assert.Equal(testId, (result.Value as Car).Id);
         }
+        #endregion
+        #region Post tests
+        [Fact]
+        public void Post_WhenCalled_ReturnsCreatedAtActionResult()
+        {
+            var okResult = Controller.Post(new Car() { Name = "name", Description = "Description" });
+            Assert.IsType<CreatedAtActionResult>(okResult.Result);
+        }
+        
+        [Fact]
+        public void Post_WhenCalled_ReturnsCarValue()
+        {
+            var newCar = Controller.Post(new Car() { Name = "name", Description = "Description" }).Result as CreatedAtActionResult;
+            Assert.IsType<Car>(newCar.Value);
+        }
 
+        [Fact]
+        public void Post_WhenCalled_ReturnsRightCount()
+        {
+            var oldItemsCount = Service.GetAll().Count;
+            Controller.Post(new Car() { Name = "name", Description = "Description" });
+            Assert.Equal(oldItemsCount+1, Service.GetAll().Count);
+        }
+
+        [Fact]
+        public void Post_WhenCalled_AssignId()
+        {
+            var newCar = Controller.Post(new Car() { Name = "name", Description = "Description" }).Result as CreatedAtActionResult;
+            Assert.NotEqual(0, ((Car)newCar.Value).Id);
+        }
+
+        #endregion
+        #region Put tests
         [Fact]
         public void Put_UnknownIdPassed_ReturnsNotFoundResult()
         {
@@ -82,11 +116,11 @@ namespace CarWebApiTests
             var result = Controller.Put(testId, o) as OkObjectResult;
             Assert.IsType<OkObjectResult>(result);
         }
+
         [Fact]
         public void Put_ExistingIdPassed_FullChanged()
         {
             var testId = 1;
-            var oldCar = (Controller.Get(testId)).Value;
             string json = @"{
               name: 'updatedName',
               description: 'updatedDesc'
@@ -98,6 +132,7 @@ namespace CarWebApiTests
             Assert.Equal("updatedName", updatedCar.Name);
             Assert.Equal("updatedDesc", updatedCar.Description);
         }
+
         [Fact]
         public void Put_ExistingIdPassed_NameChanged()
         {
@@ -129,6 +164,7 @@ namespace CarWebApiTests
             Assert.Equal("updatedDesc", updatedCar.Description);
             Assert.Equal(oldCarName, updatedCar.Name);
         }
+
         [Fact]
         public void Put_ExistingIdPassed_NameChangedToNull()
         {
@@ -144,6 +180,7 @@ namespace CarWebApiTests
             Assert.Null(updatedCar.Name);
             Assert.Equal(oldCarDesc, updatedCar.Description);
         }
+
         [Fact]
         public void Put_ExistingIdPassed_DescriptionChangedToNull()
         {
@@ -159,5 +196,29 @@ namespace CarWebApiTests
             Assert.Null(updatedCar.Description);
             Assert.Equal(oldCarName, updatedCar.Name);
         }
+        #endregion
+        #region Delete tests
+        [Fact]
+        public void Delete_UnknownIdPassed_ReturnsNotFoundResult()
+        {
+            var notFoundResult = Controller.Delete(-1);
+            Assert.IsType<NotFoundResult>(notFoundResult);
+        }
+
+        [Fact]
+        public void Delete_ExistingIdPassed_ReturnsNoContentResult()
+        {
+            var result = Controller.Delete(1);
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public void Delete_ExistingIdPassed_ReturnsRightCount()
+        {
+            var oldItemsCount = Service.GetAll().Count;
+            Controller.Delete(1);
+            Assert.Equal(oldItemsCount-1, Service.GetAll().Count);
+        }
+        #endregion
     }
 }
